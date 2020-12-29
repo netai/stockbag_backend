@@ -1,0 +1,10 @@
+body {
+    font-family: SFProDisplay-Regular, Helvetica, Arial, sans-serif;
+}
+.big-logo {
+    font-size: 5rem;
+    text-align: center;
+    margin-top: 10rem;
+    font-weight: bold;
+    vertical-align: middle;
+}
