@@ -4,7 +4,19 @@ body {
 .big-logo {
     font-size: 5rem;
     text-align: center;
-    margin-top: 10rem;
+    margin-top: 5rem;
     font-weight: bold;
     vertical-align: middle;
+}
+.btn-grp {
+    margin-top: 5rem;
+    text-align: center;
+}
+.download-btn {
+    padding: .5rem 1rem;
+    text-decoration: none;
+    border: 1px solid #0f65f0;
+    color: #fff;
+    background-color: #4184f3;
+    font-size: 2rem;
 }
