@@ -3,16 +3,19 @@
 
 <head>
     <meta charset="utf-8">
-    <title>stockbag</title>
+    <title>Stockbag</title>
     <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
 </head>
 
 <body>
-    <div class="big-logo">stockbag</div>
+    <div class="logo">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" class="logo-img"/>
+        <label class="logo-text">Stockbag</label>
+    </div>
     <div class="btn-grp">
-        <a href="{{ url_for('static', filename='files/stockbag.apk') }}" class="download-btn">Download</a>
+        <a href="{{ url_for('static', filename='files/Stockbag.apk') }}" class="download-btn">Download App</a>
     </div>
 </body>
 

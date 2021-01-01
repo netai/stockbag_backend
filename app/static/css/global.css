@@ -1,22 +1,28 @@
 body {
     font-family: SFProDisplay-Regular, Helvetica, Arial, sans-serif;
 }
-.big-logo {
-    font-size: 5rem;
+.logo {
     text-align: center;
-    margin-top: 5rem;
+    margin-top: 7rem;
     font-weight: bold;
     vertical-align: middle;
 }
+.logo-text {
+    display: block;
+    font-size: 3rem;
+}
+.logo-img {
+    width: 10rem;
+}
 .btn-grp {
-    margin-top: 5rem;
+    margin-top: 7rem;
     text-align: center;
 }
 .download-btn {
-    padding: .5rem 1rem;
+    padding: .3rem 1rem;
     text-decoration: none;
     border: 1px solid #0f65f0;
     color: #fff;
     background-color: #4184f3;
-    font-size: 2rem;
+    font-size: 1.5rem;
 }
