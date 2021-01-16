@@ -6,7 +6,7 @@ from flask_cors import CORS
 from app import create_app, web_blueprint, api_blueprint
 from app.extensions import db
 
-app = create_app(os.getenv('STOCKBAG') or 'dev')
+app = create_app(os.getenv('ENV') or 'dev')
 app.register_blueprint(web_blueprint)
 app.register_blueprint(api_blueprint)
 app.app_context().push()
