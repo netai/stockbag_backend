@@ -5,7 +5,7 @@ from ..config import Config
 
 class User(db.Model):
     """ User Model for storing user related details """
-    __tablename__ = "user"
+    __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(255), nullable=False)
