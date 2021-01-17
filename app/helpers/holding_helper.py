@@ -50,7 +50,7 @@ class HoldingHelper:
 
                     return 'done'
                 else:
-                    raise 'is_exist'
+                    return 'is_exist'
             else:
                 return 'insufficient_fund'
         except Exception as e:
