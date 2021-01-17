@@ -23,6 +23,7 @@ class TestingConfig():
 
 class ProductionConfig():
     DEBUG = True
+    SQLALCHEMY_ECHO = True
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
     SQLALCHEMY_TRACK_MODIFICATIONS = True
 
