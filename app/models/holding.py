@@ -14,7 +14,7 @@ class Holding(db.Model):
     est_exit_date = db.Column(db.DateTime, nullable=False)
     holding_type = db.Column(db.String(5), nullable=False, default='buy')
     script_id = db.Column(db.Integer, db.ForeignKey('script.id'))
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     holding_on = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
 
     def __repr__(self):
