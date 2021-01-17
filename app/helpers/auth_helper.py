@@ -24,6 +24,7 @@ class AuthHelper:
             else:
                 return None
         except Exception as e:
+            print(e)
             raise APIException
 
     @staticmethod
