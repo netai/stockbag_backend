@@ -137,6 +137,8 @@ class Holding(Resource):
                 }
             elif exe_status=='insufficient_fund':
                 raise InsufficientFundException
+            elif exe_status=='is_exist':
+                raise ResourceExistException
             else:
                 raise ResourceNotExistException
             return resp_obj, 200

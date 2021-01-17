@@ -69,33 +69,38 @@ class HoldingHelper:
                 if fund.total_amount >= new_total_price:
                     script = Script.query.filter_by(symbol=data['symbol'].upper()).filter_by(
                         exchange=data['exchange'].upper()).first()
-                    if not script:
-                        script = Script(
-                            symbol=data['symbol'].upper(),
-                            exchange=data['exchange'].upper()
-                        )
-                        db.session.add(script)
+                    find_holding = Holding.query.filter_by(script_id=script.id).filter_by(
+                        holding_type=data['holding_type'].lower()).filter_by(user_id=user_id).filter_by(id != holding.id).first()
+                    if not find_holding:
+                        if not script:
+                            script = Script(
+                                symbol=data['symbol'].upper(),
+                                exchange=data['exchange'].upper()
+                            )
+                            db.session.add(script)
+                            db.session.commit()
+
+                        holding.avg_price = data['avg_price']
+                        holding.target_price = data['target_price']
+                        holding.qty = data['qty']
+                        holding.period = data['period'].upper()
+                        holding.est_exit_date = datetime.datetime.strptime(
+                            data['est_exit_date'], '%Y-%m-%d')
+                        holding.holding_type = data['holding_type'].lower()
+                        holding.script_id = script.id
+
+                        db.session.add(holding)
+                        # calculate fund
+                        fund.total_amount -= new_total_price
+                        db.session.add(fund)
                         db.session.commit()
 
-                    holding.avg_price = data['avg_price']
-                    holding.target_price = data['target_price']
-                    holding.qty = data['qty']
-                    holding.period = data['period'].upper()
-                    holding.est_exit_date = datetime.datetime.strptime(
-                        data['est_exit_date'], '%Y-%m-%d')
-                    holding.holding_type = data['holding_type'].lower()
-                    holding.script_id = script.id
+                        data['holding_id'] = holding.id
+                        NoteHelper.save_new_note(data)
 
-                    db.session.add(holding)
-                    # calculate fund
-                    fund.total_amount -= new_total_price
-                    db.session.add(fund)
-                    db.session.commit()
-
-                    data['holding_id'] = holding.id
-                    NoteHelper.save_new_note(data)
-
-                    return 'done'
+                        return 'done'
+                    else:
+                        return 'is_exist'
                 else:
                     return 'insufficient_fund'
             else:
@@ -155,7 +160,7 @@ class HoldingHelper:
                     return 'insufficient_fund'
                 else:
                     additional_note = "<b>{} (Price: {}, Quantity: {})</b>".format(
-                    data['req_type'].upper(), data['avg_price'], data['qty'])
+                        data['req_type'].upper(), data['avg_price'], data['qty'])
                     if data['req_type'] == 'add':
                         total_price = (holding.avg_price * holding.qty) + \
                             (data['avg_price'] * data['qty'])
