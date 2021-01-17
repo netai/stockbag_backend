@@ -5,8 +5,7 @@ from flask_script import Manager
 from flask_cors import CORS
 from app import create_app, web_blueprint, api_blueprint
 from app.extensions import db
-print(os.getenv('ENV'))
-print(os.getenv('DATABASE_URL'))
+
 app = create_app(os.getenv('ENV') or 'dev')
 app.register_blueprint(web_blueprint)
 app.register_blueprint(api_blueprint)
