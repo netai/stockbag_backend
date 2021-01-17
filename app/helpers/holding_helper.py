@@ -54,7 +54,6 @@ class HoldingHelper:
             else:
                 return 'insufficient_fund'
         except Exception as e:
-            print(e)
             raise APIException
 
     @staticmethod

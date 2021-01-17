@@ -17,6 +17,7 @@ class NoteHelper:
                 db.session.commit()
             return True
         except Exception as e:
+            print(e)
             raise APIException
 
     @staticmethod
