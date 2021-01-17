@@ -69,17 +69,16 @@ class HoldingHelper:
                 if fund.total_amount >= new_total_price:
                     script = Script.query.filter_by(symbol=data['symbol'].upper()).filter_by(
                         exchange=data['exchange'].upper()).first()
-                    find_holding = Holding.query.filter_by(script_id=script.id).filter_by(
-                        holding_type=data['holding_type'].lower()).filter_by(user_id=user_id).filter_by(id != holding.id).first()
+                    if not script:
+                        script = Script(
+                            symbol=data['symbol'].upper(),
+                            exchange=data['exchange'].upper()
+                        )
+                        db.session.add(script)
+                        db.session.commit()
+                    find_holding = Holding.query.filter(Holding.script_id == script.id).filter(
+                        Holding.holding_type == data['holding_type'].lower()).filter(Holding.user_id == user_id).filter(Holding.id != holding.id).first()
                     if not find_holding:
-                        if not script:
-                            script = Script(
-                                symbol=data['symbol'].upper(),
-                                exchange=data['exchange'].upper()
-                            )
-                            db.session.add(script)
-                            db.session.commit()
-
                         holding.avg_price = data['avg_price']
                         holding.target_price = data['target_price']
                         holding.qty = data['qty']
