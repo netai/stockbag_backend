@@ -23,16 +23,32 @@ class FundHelper:
             raise APIException
 
     @staticmethod
-    def withdraw_fund(data):
+    def add_withdraw(data):
         try:
             user_id = g.user['id']
             fund = Fund.query.filter_by(user_id=user_id).first()
             if fund and data['amount']:
-                fund.invested_amount -= data['amount']
-                fund.total_amount -= data['amount']
+                unreleased_amount = 0
+                holding = Holding.query.filter_by(user_id=user_id).all()
+                if holding:
+                    for row in holding:
+                        unreleased_amount += row.avg_price * row.qty
+                profit_amount = (fund.total_amount +
+                                 unreleased_amount)-fund.invested_amount
+                if data['req_type'] == 'add':
+                    fund.invested_amount += data['amount']
+                    fund.total_amount += data['amount']
+                elif data['req_type'] == 'withdraw':
+                    if fund.total_amount >= data['amount']:
+                        fund.total_amount -= data['amount']
+                        if profit_amount < data['amount']:
+                            fund.invested_amount -= (
+                                data['amount'] - profit_amount)
+                    else:
+                        return 'insufficient_fund'
                 db.session.add(fund)
                 db.session.commit()
-            return True
+            return 'success'
         except Exception as e:
             raise APIException
 
